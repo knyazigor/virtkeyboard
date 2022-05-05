@@ -1,5 +1,5 @@
-#Virtual Keyboard project 
-##for Rolling Scopes School (2022Q1)
+# Virtual Keyboard project 
+## for Rolling Scopes School (2022Q1)
 
 Author: [Igor Shaymukhametov](https://github.com/knyazigor)
 
