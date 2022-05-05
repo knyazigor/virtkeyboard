@@ -1,0 +1,25 @@
+{
+  "name": "virtkeyboard",
+  "version": "1.0.0",
+  "description": "Virtual keyboard project",
+  "main": "main.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/knyazigor/virtkeyboard.git"
+  },
+  "keywords": [
+    "keyboard"
+  ],
+  "author": "Igor Shaymukhametov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/knyazigor/virtkeyboard/issues"
+  },
+  "homepage": "https://github.com/knyazigor/virtkeyboard#readme",
+  "devDependencies": {
+    "eslint": "^8.14.0"
+  }
+}
