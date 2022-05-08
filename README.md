@@ -7,6 +7,6 @@ Telegram **[@knyazigor](https://t.me/knyazigor)** Email **[shaym@yandex.ru](mail
 
 Task: [RSS Virtual Keyboard](https://github.com/rolling-scopes-school/tasks/blob/master/tasks/virtual-keyboard/virtual-keyboard-en.md)
 
-Repo: [knyazigor/virtkeyboard](https://github.com/knyazigor)
+Repo: [knyazigor/virtkeyboard](https://github.com/knyazigor/virtkeyboard)
 
-Deploy: [GH Pages](https://github.com/knyazigor)
+Deploy: [GH Pages](https://knyazigor.github.io/virtkeyboard/)
