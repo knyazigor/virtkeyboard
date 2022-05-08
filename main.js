@@ -178,14 +178,19 @@ class Keyboard {
   }
 
   init() {
-    this.state.lang = localStorage.getItem('lang') || 'eng'
+    this.state.lang = localStorage.getItem('lang') || 'eng';
     const body = document.querySelector('body');
     body.innerHTML = `
         <div class="container">
             <h1 class="h1">Virtual Keyboard</h1>
             <h2 class="h2">Windows version</h2>
             <textarea name="textarea" class="textarea" id="textarea" cols="30" rows="7"></textarea>
-            <h2 class="h2">To change layout press left Ctrl + Alt</h2>
+            <div class="toolbar">
+              <button class="key button button_layout"></button>
+              <h2 class="h2">To change layout press left Ctrl + Alt</h2>
+              <button class="key button button_clear"></button>
+              
+            </div>
             <div class="keyboard">
                 <div class="row" data-row="0"></div>
                 <div class="row" data-row="1"></div>
@@ -207,10 +212,10 @@ class Keyboard {
       keyContainer.classList.add(...classes);
       keyContainer.dataset.name = key;
       keyContainer.innerHTML = `
-        <span class="key__second${this.state.lang == 'rus' ? ' key_invisible' : ''}">${keySecond}</span>
-        <span class="key__main${this.state.lang == 'rus' ? ' key_invisible' : ''}">${keyMain}</span>
-        <span class="key__ru-second${this.state.lang == 'eng' ? ' key_invisible' : ''}">${keySecondRus}</span>
-        <span class="key__ru-main${this.state.lang == 'eng' ? ' key_invisible' : ''}">${keyMainRus}</span>
+        <span class="key__second${this.state.lang === 'rus' ? ' key_invisible' : ''}">${keySecond}</span>
+        <span class="key__main${this.state.lang === 'rus' ? ' key_invisible' : ''}">${keyMain}</span>
+        <span class="key__ru-second${this.state.lang === 'eng' ? ' key_invisible' : ''}">${keySecondRus}</span>
+        <span class="key__ru-main${this.state.lang === 'eng' ? ' key_invisible' : ''}">${keyMainRus}</span>
       `;
       keyContainer.addEventListener('mousedown', () => this.keyPressHandler(key));
       keyContainer.addEventListener('mouseup', () => this.keyUnPressHandler(key));
@@ -225,8 +230,18 @@ class Keyboard {
     document.addEventListener('keyup', (e) => {
       e.preventDefault();
       this.keyUnPressHandler(e.code);
-    });    
-    this.textarea.focus();        
+    });
+    this.textarea.focus();
+
+    const clearButton = document.querySelector('.button_clear');
+    clearButton.textContent = 'Clear';
+    clearButton.addEventListener('click', () => {
+      this.textarea.value = '';
+    });
+
+    const layoutButton = document.querySelector('.button_layout');
+    layoutButton.textContent = this.state.lang.toUpperCase();
+    layoutButton.addEventListener('click', () => this.switchLayout());
   }
 
   getKeyParams(key) {
@@ -351,10 +366,11 @@ class Keyboard {
   }
 
   switchLayout() {
-    this.state.lang = this.state.lang === 'eng' ? 'rus' : 'eng';    
+    this.state.lang = this.state.lang === 'eng' ? 'rus' : 'eng';
     const keysArr = [...document.querySelectorAll('.key')];
     keysArr.forEach((key) => [...key.querySelectorAll('span')].forEach((span) => span.classList.toggle('key_invisible')));
-    localStorage.setItem('lang', this.state.lang)
+    localStorage.setItem('lang', this.state.lang);
+    document.querySelector('.button_layout').textContent = this.state.lang.toUpperCase();
   }
 
   getContent(key) {
