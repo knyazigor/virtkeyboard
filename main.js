@@ -178,6 +178,7 @@ class Keyboard {
   }
 
   init() {
+    this.state.lang = localStorage.getItem('lang') || 'eng'
     const body = document.querySelector('body');
     body.innerHTML = `
         <div class="container">
@@ -206,25 +207,26 @@ class Keyboard {
       keyContainer.classList.add(...classes);
       keyContainer.dataset.name = key;
       keyContainer.innerHTML = `
-        <span class="key__second">${keySecond}</span>
-        <span class="key__main">${keyMain}</span>
-        <span class="key__ru-second key_invisible">${keySecondRus}</span>
-        <span class="key__ru-main key_invisible">${keyMainRus}</span>
+        <span class="key__second${this.state.lang == 'rus' ? ' key_invisible' : ''}">${keySecond}</span>
+        <span class="key__main${this.state.lang == 'rus' ? ' key_invisible' : ''}">${keyMain}</span>
+        <span class="key__ru-second${this.state.lang == 'eng' ? ' key_invisible' : ''}">${keySecondRus}</span>
+        <span class="key__ru-main${this.state.lang == 'eng' ? ' key_invisible' : ''}">${keyMainRus}</span>
       `;
       keyContainer.addEventListener('mousedown', () => this.keyPressHandler(key));
       keyContainer.addEventListener('mouseup', () => this.keyUnPressHandler(key));
       keyboardContainer.querySelector(`[data-row="${value.row}"]`).appendChild(keyContainer);
     }
+
     this.textarea = document.querySelector('.textarea');
-    this.textarea.addEventListener('keydown', (e) => {
+    document.addEventListener('keydown', (e) => {
       e.preventDefault();
       this.keyPressHandler(e.code);
     });
-    this.textarea.addEventListener('keyup', (e) => {
+    document.addEventListener('keyup', (e) => {
       e.preventDefault();
       this.keyUnPressHandler(e.code);
-    });
-    this.textarea.focus();
+    });    
+    this.textarea.focus();        
   }
 
   getKeyParams(key) {
@@ -349,9 +351,10 @@ class Keyboard {
   }
 
   switchLayout() {
-    this.state.lang = this.state.lang === 'eng' ? 'rus' : 'eng';
+    this.state.lang = this.state.lang === 'eng' ? 'rus' : 'eng';    
     const keysArr = [...document.querySelectorAll('.key')];
     keysArr.forEach((key) => [...key.querySelectorAll('span')].forEach((span) => span.classList.toggle('key_invisible')));
+    localStorage.setItem('lang', this.state.lang)
   }
 
   getContent(key) {
