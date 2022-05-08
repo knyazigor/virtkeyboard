@@ -236,12 +236,16 @@ class Keyboard {
     const clearButton = document.querySelector('.button_clear');
     clearButton.textContent = 'Clear';
     clearButton.addEventListener('click', () => {
+      this.textarea.focus();
       this.textarea.value = '';
     });
 
     const layoutButton = document.querySelector('.button_layout');
     layoutButton.textContent = this.state.lang.toUpperCase();
-    layoutButton.addEventListener('click', () => this.switchLayout());
+    layoutButton.addEventListener('click', () => {
+      this.textarea.focus();
+      this.switchLayout();
+    });
   }
 
   getKeyParams(key) {
