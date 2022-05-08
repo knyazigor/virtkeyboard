@@ -182,7 +182,9 @@ class Keyboard {
     body.innerHTML = `
         <div class="container">
             <h1 class="h1">Virtual Keyboard</h1>
-            <textarea name="textarea" class="textarea" id="textarea" cols="30" rows="8"></textarea>
+            <h2 class="h2">Windows version</h2>
+            <textarea name="textarea" class="textarea" id="textarea" cols="30" rows="7"></textarea>
+            <h2 class="h2">To change layout press left Ctrl + Alt</h2>
             <div class="keyboard">
                 <div class="row" data-row="0"></div>
                 <div class="row" data-row="1"></div>
@@ -190,6 +192,7 @@ class Keyboard {
                 <div class="row" data-row="3"></div>
                 <div class="row" data-row="4"></div>
             </div>
+
         </div>
     `;
     const keyboardContainer = document.querySelector('.keyboard');
@@ -221,6 +224,7 @@ class Keyboard {
       e.preventDefault();
       this.keyUnPressHandler(e.code);
     });
+    this.textarea.focus();
   }
 
   getKeyParams(key) {

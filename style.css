@@ -24,13 +24,19 @@ h1 {
     letter-spacing: 0.05em;
 }
 
+.h2 {
+  margin: 0;
+  font-size: 1.2em;
+  color: #dbdbdb;
+  letter-spacing: 0.05em;
+}
+
 .container {
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    padding-top: 20px;
-    gap: 40px;
+    gap: 15px;
 }
 
 .textarea {
