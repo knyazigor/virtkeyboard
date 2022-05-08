@@ -80,6 +80,7 @@ const keys = {
   Backslash: {
     eng: { key: '\\', shiftKey: '|', capsKey: '\\' }, rus: { key: '\\', shiftKey: '/', capsKey: '\\' }, row: 1, pos: 13,
   },
+  Delete: { row: 1, pos: 14 },
 
   CapsLock: { row: 2, pos: 0 },
   KeyA: {
@@ -167,7 +168,7 @@ const keys = {
 class Keyboard {
   constructor(keysArr) {
     this.keys = keysArr;
-    this.specials = ['Backspace', 'Tab', 'CapsLock', 'Enter', 'ShiftLeft', 'ShiftRight', 'ControlLeft', 'MetaLeft', 'AltLeft', 'Space', 'ControlRight', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
+    this.specials = ['Backspace', 'Tab', 'CapsLock', 'Enter', 'ShiftLeft', 'ShiftRight', 'ControlLeft', 'MetaLeft', 'AltLeft', 'Space', 'ControlRight', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Delete'];
     this.state = {
       isCapsOn: false, isShiftPressed: false, lang: 'eng', caseUp: false,
     };
@@ -241,6 +242,7 @@ class Keyboard {
       ArrowDown: '\u2193',
       ArrowLeft: '\u2190',
       ArrowRight: '\u2192',
+      Delete: 'Del',
     };
     if (this.keys[key].eng && this.keys[key].rus) {
       params.keyMain = this.keys[key].eng.key.toUpperCase();
@@ -262,6 +264,7 @@ class Keyboard {
     if (key === 'ShiftRight') params.classes.push('key_shift-right');
     if (key === 'ControlRight' || key === 'ControlLeft') params.classes.push('key_ctrl');
     if (key === 'Space') params.classes.push('key_space');
+
     return params;
   }
 
@@ -276,6 +279,7 @@ class Keyboard {
 
     const startPos = this.textarea.selectionStart;
     const endPos = this.textarea.selectionEnd;
+    this.cursorPosition = endPos;
     this.textarea.setSelectionRange(this.cursorPosition, this.cursorPosition);
     if (key === 'CapsLock') {
       this.state.isCapsOn = !this.state.isCapsOn;
@@ -308,9 +312,18 @@ class Keyboard {
         : this.textarea.value.length;
       this.textarea.setSelectionRange(this.cursorPosition, this.cursorPosition);
       return;
+    } if (key === 'Delete') {
+      this.textarea.value = this.textarea.value.substring(0, startPos)
+        + this.textarea.value.substring(
+          endPos + (startPos === endPos ? 1 : 0),
+          this.textarea.value.length,
+        );
+      this.textarea.setSelectionRange(startPos, startPos);
+      return;
     }
 
     const content = this.getContent(key);
+    if (content === '') return;
 
     if (this.textarea.selectionStart || this.textarea.selectionStart === '0') {
       this.textarea.value = this.textarea.value.substring(0, startPos) + content
