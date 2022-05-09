@@ -223,11 +223,11 @@ class Keyboard {
     }
 
     this.textarea = document.querySelector('.textarea');
-    document.addEventListener('keydown', (e) => {
+    this.textarea.addEventListener('keydown', (e) => {
       e.preventDefault();
       this.keyPressHandler(e.code);
     });
-    document.addEventListener('keyup', (e) => {
+    this.textarea.addEventListener('keyup', (e) => {
       e.preventDefault();
       this.keyUnPressHandler(e.code);
     });
